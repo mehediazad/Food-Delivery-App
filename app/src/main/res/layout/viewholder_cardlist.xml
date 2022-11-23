@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="15dp"
+        android:elevation="3dp"
+        android:background="@drawable/cart_background">
+
+        <ImageView
+            android:id="@+id/imageViewCartList"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:src="@drawable/pop_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewTitleCartList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Title"
+            android:textColor="#373b54"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageViewCartList"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewCartListMinusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/minus"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewCartList"
+            app:layout_constraintStart_toStartOf="@+id/textViewTitleCartList" />
+
+        <TextView
+            android:id="@+id/numberOfItemCartList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="1"
+            android:textColor="#373b54"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewCartListMinusBtn"
+            app:layout_constraintStart_toEndOf="@+id/imageViewCartListMinusBtn"
+            app:layout_constraintTop_toTopOf="@+id/imageViewCartListMinusBtn" />
+
+        <ImageView
+            android:id="@+id/imageViewCartListPlusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/plus"
+            app:layout_constraintBottom_toBottomOf="@+id/numberOfItemCartList"
+            app:layout_constraintStart_toEndOf="@+id/numberOfItemCartList"
+            app:layout_constraintTop_toTopOf="@+id/numberOfItemCartList" />
+
+        <TextView
+            android:id="@+id/textViewTkCardList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="45dp"
+            android:text="৳"
+            android:textAlignment="center"
+            android:textColor="#FA0C0C"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewTitleCartList"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewTitleCartList" />
+
+        <TextView
+            android:id="@+id/feeEachItemCaetList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="#373b54"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewTkCardList"
+            app:layout_constraintTop_toTopOf="@+id/textViewTkCardList" />
+
+        <TextView
+            android:id="@+id/tkLogoCartList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="৳"
+            android:textColor="#FA0C0C"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/textViewTkCardList"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+            android:id="@+id/totalFeeEachItemCaetList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="18sp"
+            android:layout_marginStart="4dp"
+            app:layout_constraintStart_toStartOf="@+id/feeEachItemCaetList"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
