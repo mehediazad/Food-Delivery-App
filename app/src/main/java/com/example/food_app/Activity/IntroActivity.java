@@ -1,6 +1,7 @@
 package com.example.food_app.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
@@ -21,7 +22,7 @@ public class IntroActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IntroActivity.this,MainActivity.class));
+                startActivity(new Intent(IntroActivity.this,LoginMainActivity.class));
             }
         });
 

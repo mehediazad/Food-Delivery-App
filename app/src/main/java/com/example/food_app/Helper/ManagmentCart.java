@@ -1,15 +1,22 @@
 package com.example.food_app.Helper;
 
+import android.app.Application;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.food_app.Adapter.PopularAdapter;
+import com.example.food_app.Database.PopularDatabase;
 import com.example.food_app.Interface.ChangeNumberItemsListener;
 import com.example.food_app.Model.Popular;
+import com.example.food_app.ViewModel.PopularViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ManagmentCart {
-    private Context context;
+    public Context context;
     private TinyDB tinyDB;
 
     public ManagmentCart(Context context) {
@@ -41,7 +48,7 @@ public class ManagmentCart {
 
     public ArrayList<Popular> getListCart() {
         return tinyDB.getListObject("CardList");
-    }
+   }
 
     public void plusNumberOfFood(ArrayList<Popular> popularList, int position, ChangeNumberItemsListener changeNumberItemsListener) {
         popularList.get(position).setNumberInCard(popularList.get(position).getNumberInCard() + 1);

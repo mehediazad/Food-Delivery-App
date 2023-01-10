@@ -2,12 +2,16 @@ package com.example.food_app.Model;
 
 import androidx.room.Entity;
 import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
 @Entity(tableName = "popular_table", indices = @Index(value = {"id"}, unique = true))
 
 public class Popular implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+
     private String title;
     private String pic;
     private String description;
@@ -19,9 +23,10 @@ public class Popular implements Serializable {
         this.pic = pic;
         this.description = description;
         this.fee = fee;
+
     }
 
-    public Popular(String title, String pic, String description, Double fee, int numberInCard) {
+    public void Popular_numberInCard(String title, String pic, String description, Double fee, int numberInCard) {
         this.title = title;
         this.pic = pic;
         this.description = description;

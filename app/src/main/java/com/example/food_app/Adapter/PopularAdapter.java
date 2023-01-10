@@ -20,12 +20,17 @@ import com.example.food_app.R;
 import java.util.List;
 
 public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHolder> {
-    private Context context;
-    private List<Popular> popularList;
+    public Context context;
+    public List<Popular> popularList;
 
     public PopularAdapter(Context context, List<Popular> popularList) {
         this.context = context;
         this.popularList = popularList;
+    }
+
+    public void setFilterredList(List<Popular> popularList){
+        this.popularList = popularList;
+        notifyDataSetChanged();
     }
 
     @NonNull
