@@ -28,6 +28,4 @@ public class ShipppingViewModel extends AndroidViewModel {
     public void updateShipping(ShippingAddress shippingAddress){
         repository.updateShipping(shippingAddress);
     }
-
-
 }

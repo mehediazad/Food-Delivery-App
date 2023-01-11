@@ -57,6 +57,7 @@ public class ShippingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         //
+
         bottomNavigation();
 
         authProfile = FirebaseAuth.getInstance();
@@ -80,8 +81,7 @@ public class ShippingActivity extends AppCompatActivity {
                     editText_Shopping_full_name.setError("Full Name is required");
                     editText_Shopping_full_name.requestFocus();
 
-                }
-                else if ((TextUtils.isEmpty(textMobile))) {
+                } else if ((TextUtils.isEmpty(textMobile))) {
                     Toast.makeText(ShippingActivity.this, "Please Enter Your Phone Number", Toast.LENGTH_SHORT).show();
                     editText_ShippingAddress_mobile.setError("Phone Number is required");
                     editText_ShippingAddress_mobile.requestFocus();
@@ -89,19 +89,17 @@ public class ShippingActivity extends AppCompatActivity {
                     Toast.makeText(ShippingActivity.this, "Please re-enter Your Phone Number", Toast.LENGTH_SHORT).show();
                     editText_ShippingAddress_mobile.setError("Phone Number should be 11 digits");
                     editText_ShippingAddress_mobile.requestFocus();
-                }else if (!mobileMatcher.find()){
+                } else if (!mobileMatcher.find()) {
                     Toast.makeText(ShippingActivity.this, "Please re-enter Your Phone Number", Toast.LENGTH_SHORT).show();
                     editText_ShippingAddress_mobile.setError("Phone Number is not valid");
                     editText_ShippingAddress_mobile.requestFocus();
-                }
-                else if (TextUtils.isEmpty(textAddress)){
+                } else if (TextUtils.isEmpty(textAddress)) {
                     Toast.makeText(ShippingActivity.this, "Please Enter Your Shipping Address", Toast.LENGTH_SHORT).show();
                     editText_ShippingAddress.setError("Shipping Address is required");
                     editText_ShippingAddress.requestFocus();
-                }
-                else {
+                } else {
                     progressBar.setVisibility(View.VISIBLE);
-                    shippingAddress(textFullName,textMobile,textAddress);
+                    shippingAddress(textFullName, textMobile, textAddress);
                 }
             }
         });
@@ -117,13 +115,13 @@ public class ShippingActivity extends AppCompatActivity {
 
         shipppingViewModel.insertShipping(shippingAddress);
 
-        Toast.makeText(this,"Successfully!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Successfully!", Toast.LENGTH_SHORT).show();
         progressBar.setVisibility(View.GONE);
 
-        Intent intent = new Intent(ShippingActivity.this,PaymentActivity.class);
-        intent.putExtra("Name",textFullName);
-        intent.putExtra("Phone",textMobile);
-        intent.putExtra("Address",textAddress);
+        Intent intent = new Intent(ShippingActivity.this, PaymentActivity.class);
+        intent.putExtra("Name", textFullName);
+        intent.putExtra("Phone", textMobile);
+        intent.putExtra("Address", textAddress);
         startActivity(intent);
         finish();
     }
@@ -171,7 +169,11 @@ public class ShippingActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
-        } else if (id == R.id.menu_update_profile) {
+        } else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(ShippingActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();
+        }else if (id == R.id.menu_update_profile) {
             Intent intent = new Intent(ShippingActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
             finish();
@@ -202,4 +204,12 @@ public class ShippingActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ShippingActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
+
+    }
 }

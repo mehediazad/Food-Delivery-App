@@ -39,6 +39,7 @@ public class PaymentActivity extends AppCompatActivity {
     String textMobile;
     String textAddress;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +148,11 @@ public class PaymentActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
-        } else if (id == R.id.menu_update_profile) {
+        } else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(PaymentActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();}
+        else if (id == R.id.menu_update_profile) {
             Intent intent = new Intent(PaymentActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
             finish();
@@ -175,6 +180,15 @@ public class PaymentActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
 
+
+    }
+    // Back to home
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
 
     }
 

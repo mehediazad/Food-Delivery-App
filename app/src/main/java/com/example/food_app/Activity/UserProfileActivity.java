@@ -36,6 +36,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private String fullName, email, doB, gender, mobile;
     private FirebaseAuth authProfile;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         //
+
         initView();
         bottomNavigation();
 
@@ -183,6 +185,10 @@ public class UserProfileActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
+        }else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(UserProfileActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.menu_update_profile) {
             Intent intent = new Intent(UserProfileActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
@@ -210,5 +216,14 @@ public class UserProfileActivity extends AppCompatActivity {
             Toast.makeText(UserProfileActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+    // Back to home
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
+
     }
 }

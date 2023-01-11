@@ -103,4 +103,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         });
     }
+    // Back to home
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ForgotPasswordActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
+
+    }
 }

@@ -53,6 +53,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private String txtFullName, txtDoB, txtGender, txtMobile;
     private LinearLayout profile;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
         });
         //
+
 
         initView();
         bottomNavigation();
@@ -305,8 +307,11 @@ public class UpdateProfileActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
-        }
-        else if (id == R.id.menu_update_profile) {
+        }else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(UpdateProfileActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.menu_update_profile) {
             Intent intent = new Intent(UpdateProfileActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
             finish();
@@ -349,5 +354,14 @@ public class UpdateProfileActivity extends AppCompatActivity {
         textView_profile_update_email = findViewById(R.id.textView_profile_update_email);
         textView_profile_upload_pic = findViewById(R.id.textView_profile_upload_pic);
         profile = findViewById(R.id.profile);
+    }
+    // Back to home
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(UpdateProfileActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
+
     }
 }

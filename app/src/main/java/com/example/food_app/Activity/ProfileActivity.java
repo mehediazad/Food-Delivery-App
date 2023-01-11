@@ -36,6 +36,9 @@ public class ProfileActivity extends AppCompatActivity {
             textView_show_mobile;
     private String fullName, email, doB, gender, mobile;
     private FirebaseAuth authProfile;
+    private String TAG = this.getClass().getName();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         //
+
         initView();
         bottomNavigation();
 
@@ -184,6 +188,10 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
+        }else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(ProfileActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.menu_update_profile) {
             Intent intent = new Intent(ProfileActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
@@ -212,4 +220,15 @@ public class ProfileActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    // Back to home
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
+
+    }
+
 }

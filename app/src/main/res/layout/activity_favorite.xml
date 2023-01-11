@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.ShowDetailActivity">
+    tools:context=".Activity.FavoriteActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_Bar_Layout"
@@ -18,12 +18,11 @@
             android:layout_height="?actionBarSize"
             android:background="#F61A0A"
             app:navigationIcon="@drawable/arrow_back_24"
-            app:title="Show Details"
+            app:title="Favorite List"
             app:titleTextColor="#FFFFFF" />
     </com.google.android.material.appbar.AppBarLayout>
-
     <ScrollView
-        android:id="@+id/scrollViewShowDetail"
+        android:id="@+id/scrollViewCartList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp">
@@ -31,109 +30,60 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="vertical"
             android:paddingBottom="100dp">
 
             <TextView
-                android:id="@+id/textViewTitleShowDetail"
+                android:id="@+id/textViewCartList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="Title"
-                android:textAlignment="center"
-                android:textColor="#373b54"
-                android:textSize="24sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:text="My Favorite List"
+                android:textColor="#EF0F0F"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textViewTkShowDetail"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewFavoriteList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="৳"
-                android:textAlignment="center"
-                android:textColor="#FA0C0C"
-                android:textSize="24sp" />
+                android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageViewShowDetail"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:src="@drawable/pop_1"
-                android:textAlignment="center" />
-            <ImageView
-                android:id="@+id/favorite"
-                android:layout_gravity="end"
-                android:layout_marginRight="50dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/favorite_24"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/btnMinusShowDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/minus" />
-
-                <TextView
-                    android:id="@+id/textViewnumberOfOrder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="1"
-                    android:textColor="#373b54"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/btnPlusShowDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/plus" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textViewDescriptionShowDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Description"
-                android:textColor="#686767"
-                android:textSize="20sp"
-                android:layout_marginBottom="20dp"/>
-
-            <TextView
-                android:id="@+id/AddbtnShowDetail"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="16dp"
-                android:background="@drawable/orange_button"
-                android:elevation="3dp"
-                android:gravity="center"
-                android:text="Add to Cart"
-                android:textColor="#ffffff"
-                android:textSize="18sp"/>
+            </androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
-
-
     </ScrollView>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/emptyTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Your Cart is Empty"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
+        android:id="@+id/coordinatorLayoutApp_bar"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollViewCartList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -222,7 +172,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/support"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -246,7 +195,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/setting"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -281,8 +229,7 @@
             android:tint="#ffffff"
             app:backgroundTint="#ff5e00"
             app:layout_anchor="@id/app_bar"
-            app:maxImageSize="30dp"
-            tools:ignore="SpeakableTextPresentCheck">
+            app:maxImageSize="30dp">
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>
 

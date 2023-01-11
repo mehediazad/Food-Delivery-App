@@ -3,6 +3,8 @@ package com.example.food_app.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,20 +17,21 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.food_app.Adapter.CartListAdapter;
+import com.example.food_app.Adapter.FavoriteAdapter;
 import com.example.food_app.Helper.ManagmentCart;
 import com.example.food_app.Interface.ChangeNumberItemsListener;
 import com.example.food_app.Model.Popular;
 import com.example.food_app.R;
+import com.example.food_app.ViewModel.PopularViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-public class CartListActivity extends AppCompatActivity {
-    private RecyclerView recyclerViewCartList;
+public class FavoriteActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerViewFavoriteList;
     private TextView textViewCartListTotalFee;
     private TextView textViewCartListDeliveryServices;
     private TextView textViewCartListTax;
@@ -37,19 +40,22 @@ public class CartListActivity extends AppCompatActivity {
     private TextView emptyTxt;
     private ScrollView scrollViewCartList;
     private double tax;
-    private ManagmentCart managmentCart;
-    private CartListAdapter cartListAdapter;
+    private FavoriteAdapter favoriteAdapter;
     private ArrayList<Popular> popularList;
     private FirebaseAuth authProfile;
     private FirebaseUser firebaseUser;
     private LinearLayout profile;
+    private TextView AddbtnShowDetail;
+    private  ManagmentCart managmentCart;
+    private Popular popular;
+    private PopularViewModel popularViewModel;
+    private ConstraintLayout constraintLayoutFavorite;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart_list);
-
+        setContentView(R.layout.activity_favorite);
 
         // Toolbar
         Toolbar toolbar = findViewById(R.id.toolbarAction_bar);
@@ -58,27 +64,22 @@ public class CartListActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         //
 
+
         profile = findViewById(R.id.profile);
 
         managmentCart = new ManagmentCart(this);
-
         popularList = new ArrayList<>();
         initView();
         setCartListAdapter();
-        CalculateCart();
+        //CalculateCart();
         bottomNavigation();
+
 
         authProfile = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = authProfile.getCurrentUser();
 
-        CardListCheckOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CartListActivity.this,ShippingActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        popularViewModel = ViewModelProviders.of(this).get(PopularViewModel.class);
+
     }
 
     @Override
@@ -95,83 +96,57 @@ public class CartListActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
-        }else if (id == R.id.menu_favorite) {
-            Intent intent = new Intent(CartListActivity.this, FavoriteActivity.class);
+        } else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(FavoriteActivity.this, FavoriteActivity.class);
             startActivity(intent);
-            finish();
-        } else if (id == R.id.menu_update_profile) {
-            Intent intent = new Intent(CartListActivity.this, UpdateProfileActivity.class);
+            finish();}
+        else if (id == R.id.menu_update_profile) {
+            Intent intent = new Intent(FavoriteActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.menu_update_email) {
-            Intent intent = new Intent(CartListActivity.this, UpdateEmailActivity.class);
+            Intent intent = new Intent(FavoriteActivity.this, UpdateEmailActivity.class);
             startActivity(intent);
 //        } else if (id == R.id.menu_update_settings) {
 //            Intent intent = new Intent(DeleteProfileActivity.this, UpdateSettingsActivity.class);
 //            startActivity(intent);
         } else if (id == R.id.menu_change_password) {
-            Intent intent = new Intent(CartListActivity.this, PasswordChangeActivity.class);
+            Intent intent = new Intent(FavoriteActivity.this, PasswordChangeActivity.class);
             startActivity(intent);
         } else if (id == R.id.menu_delete_profile) {
-            Intent intent = new Intent(CartListActivity.this, DeleteProfileActivity.class);
+            Intent intent = new Intent(FavoriteActivity.this, DeleteProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.menu_Logout) {
             authProfile.signOut();
-            Toast.makeText(CartListActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(CartListActivity.this, LoginMainActivity.class);
+            Toast.makeText(FavoriteActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(FavoriteActivity.this, LoginMainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(CartListActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FavoriteActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
 
-
     }
-
     private void initView() {
-        recyclerViewCartList = findViewById(R.id.recyclerViewCartList);
-        textViewCartListTotalFee = findViewById(R.id.textViewCartListTotalFee);
+        recyclerViewFavoriteList = findViewById(R.id.recyclerViewFavoriteList);
         textViewCartListDeliveryServices = findViewById(R.id.textViewCartListDeliveryServices);
-        textViewCartListTax = findViewById(R.id.textViewCartListTax);
-        totalTxt = findViewById(R.id.totalTxt);
         CardListCheckOutBtn = findViewById(R.id.CardListCheckOutBtn);
         scrollViewCartList = findViewById(R.id.scrollViewCartList);
         emptyTxt = findViewById(R.id.emptyTxt);
+        AddbtnShowDetail = findViewById(R.id.AddbtnShowDetail);
+        constraintLayoutFavorite = findViewById(R.id.constraintLayoutFavorite);
     }
-
     private void setCartListAdapter() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerViewCartList.setLayoutManager(linearLayoutManager);
-        cartListAdapter = new CartListAdapter(managmentCart.getListCart(), this, new ChangeNumberItemsListener() {
+        recyclerViewFavoriteList.setLayoutManager(linearLayoutManager);
+        favoriteAdapter = new FavoriteAdapter(managmentCart.getFavoriteCardList(), this, new ChangeNumberItemsListener() {
             @Override
-            public void changed() {
-                CalculateCart();
-            }
+            public void changed(){}
         });
-        recyclerViewCartList.setAdapter(cartListAdapter);
-        if (managmentCart.getListCart().isEmpty()) {
-            emptyTxt.setVisibility(View.VISIBLE);
-            scrollViewCartList.setVisibility(View.GONE);
-        } else {
-            emptyTxt.setVisibility(View.GONE);
-            scrollViewCartList.setVisibility(View.VISIBLE);
-        }
-    }
+        recyclerViewFavoriteList.setAdapter(favoriteAdapter);
 
-    private void CalculateCart() {
-        double percentTax = 0.02;
-        double delivery = 60;
-
-        tax = Math.round((managmentCart.getTotalfee() * percentTax * 100) / 100);
-        double total = Math.round((managmentCart.getTotalfee() + tax + delivery) * 100) / 100;
-        double itemTotal = Math.round(managmentCart.getTotalfee() * 100) / 100;
-
-        textViewCartListTotalFee.setText("৳" + itemTotal);
-        textViewCartListTax.setText("৳" + tax);
-        textViewCartListDeliveryServices.setText("৳" + delivery);
-        totalTxt.setText("৳" + total);
     }
 
     private void bottomNavigation() {
@@ -181,27 +156,27 @@ public class CartListActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CartListActivity.this, CartListActivity.class));
+                startActivity(new Intent(FavoriteActivity.this, CartListActivity.class));
             }
         });
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CartListActivity.this, MainActivity.class));
+                startActivity(new Intent(FavoriteActivity.this, MainActivity.class));
             }
         });
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CartListActivity.this, ProfileActivity.class));
+                startActivity(new Intent(FavoriteActivity.this, ProfileActivity.class));
             }
         });
     }
     // Back to home
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(CartListActivity.this, MainActivity.class);
+        Intent intent = new Intent(FavoriteActivity.this, MainActivity.class);
         startActivity(intent);
         super.onBackPressed();
         finish();

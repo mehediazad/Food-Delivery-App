@@ -4,21 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.Checkable;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,7 +27,6 @@ import com.example.food_app.Model.Category;
 import com.example.food_app.Model.Popular;
 import com.example.food_app.Model.ReadWriteUserDetails;
 import com.example.food_app.R;
-import com.example.food_app.ViewModel.PopularViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -62,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth authProfile;
     private FirebaseUser firebaseUser;
     private SearchView searchView;
-
+    private String TAG = this.getClass().getName();
 
 
     @Override
@@ -76,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         //
+
 
         recyclerViewCategories = findViewById(R.id.recyclerViewCategories);
         recyclerViewPopular = findViewById(R.id.recyclerViewPopular);
@@ -211,7 +208,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
-        } else if (id == R.id.menu_update_profile) {
+        } else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();
+        }else if (id == R.id.menu_update_profile) {
             Intent intent = new Intent(MainActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
             finish();
@@ -272,4 +273,34 @@ public class MainActivity extends AppCompatActivity {
         popularList.add(new Popular("Cheese Burger", "pop_2", "Beef,Gouda Cheese, Special Sauce, Lettuce,Tomato", 350.0));
         popularList.add(new Popular("Vegetable Pizza", "pop_3", "Oliva Oil,Pitted Kalamata, Cherry tomatoes,Fresh Orange, Basil", 300.00));
     }
+
+    // OnBack pressed exit app
+    boolean twice;
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG,"Click");
+        if (twice == true){
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+            System.exit(0);
+
+        }
+
+       // super.onBackPressed();
+        Toast.makeText(MainActivity.this,"Please Press Back Again to Exit",Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                twice = false;
+                Log.d(TAG,"teice: "+twice);
+
+            }
+        },3000);
+        twice = true;
+    }
+    //
+
 }

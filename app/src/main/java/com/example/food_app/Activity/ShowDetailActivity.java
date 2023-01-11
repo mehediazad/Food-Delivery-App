@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,11 +22,7 @@ import com.example.food_app.R;
 import com.example.food_app.ViewModel.PopularViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.security.PublicKey;
 
 public class ShowDetailActivity extends AppCompatActivity {
     private TextView textViewTitleShowDetail;
@@ -45,8 +38,8 @@ public class ShowDetailActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private TextView button_login;
     private PopularViewModel popularViewModel;
-
-    private Popular object;
+    private ImageView favorite;
+    private Popular popular;
     int numberOfOrder = 1;
 
     @Override
@@ -64,12 +57,23 @@ public class ShowDetailActivity extends AppCompatActivity {
         //
 
         managmentCart = new ManagmentCart(this);
+      //  managmentFavoriteCart = new ManagmentFavoriteCart(this);
 
         initView();
         getBundle();
         bottomNavigation();
         authProfile = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = authProfile.getCurrentUser();
+
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favorite.setImageResource(R.drawable.favorite_red_24);
+                managmentCart.insertFavoriteFood(popular);
+            }
+        });
+
+
     }
 
     private void bottomNavigation() {
@@ -102,14 +106,14 @@ public class ShowDetailActivity extends AppCompatActivity {
     }
 
     private void getBundle() {
-        object = (Popular) getIntent().getSerializableExtra("object");
-        int drawableResourceId = this.getResources().getIdentifier(object.getPic(), "drawable", this.getPackageName());
+        popular = (Popular) getIntent().getSerializableExtra("object");
+        int drawableResourceId = this.getResources().getIdentifier(popular.getPic(), "drawable", this.getPackageName());
         Glide.with(this)
                 .load(drawableResourceId)
                 .into(imageViewShowDetail);
-        textViewTitleShowDetail.setText(object.getTitle());
-        textViewTkShowDetail.setText("৳" + object.getFee());
-        textViewDescriptionShowDetail.setText(object.getDescription());
+        textViewTitleShowDetail.setText(popular.getTitle());
+        textViewTkShowDetail.setText("৳" + popular.getFee());
+        textViewDescriptionShowDetail.setText(popular.getDescription());
         textViewnumberOfOrder.setText(String.valueOf(numberOfOrder));
 
         btnPlusShowDetail.setOnClickListener(new View.OnClickListener() {
@@ -133,13 +137,14 @@ public class ShowDetailActivity extends AppCompatActivity {
         AddbtnShowDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                object.setNumberInCard(numberOfOrder);
-                managmentCart.insertPopularFood(object);
-                popularViewModel.insertPopular(object);
+                popular.setNumberInCard(numberOfOrder);
+                managmentCart.insertPopularFood(popular);
+                popularViewModel.insertPopular(popular);
             }
         });
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.common_menu, menu);
@@ -154,6 +159,10 @@ public class ShowDetailActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
+        } else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(ShowDetailActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.menu_update_profile) {
             Intent intent = new Intent(ShowDetailActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
@@ -195,6 +204,17 @@ public class ShowDetailActivity extends AppCompatActivity {
         textViewDescriptionShowDetail = findViewById(R.id.textViewDescriptionShowDetail);
         AddbtnShowDetail = findViewById(R.id.AddbtnShowDetail);
         button_login = findViewById(R.id.button_login);
+        favorite = findViewById(R.id.favorite);
+
+    }
+
+    // Back to home
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ShowDetailActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
 
     }
 }

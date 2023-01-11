@@ -46,9 +46,35 @@ public class ManagmentCart {
         Toast.makeText(context, "Added to Your Card", Toast.LENGTH_SHORT).show();
     }
 
+    public void insertFavoriteFood(Popular item) {
+        ArrayList<Popular> popularList = getFavoriteCardList();
+        boolean existAlready = false;
+
+        int n = 0;
+        for (int i = 0; i < popularList.size(); i++) {
+            if (popularList.get(i).getTitle().equals(item.getTitle())) {
+                existAlready = true;
+                n = i;
+                break;
+            }
+
+        }
+        if (existAlready) {
+            popularList.get(n).setNumberInCard(item.getNumberInCard());
+        } else {
+            popularList.add(item);
+        }
+        tinyDB.putListObject("FavoriteCardList", popularList);
+        Toast.makeText(context, "Added to Your Favorite Card", Toast.LENGTH_SHORT).show();
+    }
+
     public ArrayList<Popular> getListCart() {
         return tinyDB.getListObject("CardList");
    }
+
+    public ArrayList<Popular> getFavoriteCardList() {
+        return tinyDB.getListObject("FavoriteCardList");
+    }
 
     public void plusNumberOfFood(ArrayList<Popular> popularList, int position, ChangeNumberItemsListener changeNumberItemsListener) {
         popularList.get(position).setNumberInCard(popularList.get(position).getNumberInCard() + 1);

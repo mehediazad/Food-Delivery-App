@@ -41,6 +41,7 @@ public class UpdateProfilePicActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri uriImage;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,7 @@ public class UpdateProfilePicActivity extends AppCompatActivity {
             }
         });
         //
+
         bottomNavigation();
         authProfile = FirebaseAuth.getInstance();
         firebaseUser = authProfile.getCurrentUser();
@@ -190,6 +192,10 @@ public class UpdateProfilePicActivity extends AppCompatActivity {
             Intent intent = new Intent(UpdateProfilePicActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
             finish();
+        }else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(UpdateProfilePicActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         else if (id == R.id.menu_update_email) {
@@ -218,5 +224,14 @@ public class UpdateProfilePicActivity extends AppCompatActivity {
             Toast.makeText(UpdateProfilePicActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+    // Back to home
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(UpdateProfilePicActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
+
     }
 }

@@ -44,6 +44,7 @@ public class UpdateEmailActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private LinearLayout profile;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -237,7 +238,11 @@ public class UpdateEmailActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
-        } else if (id == R.id.menu_update_profile) {
+        } else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(UpdateEmailActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();
+        }else if (id == R.id.menu_update_profile) {
             Intent intent = new Intent(UpdateEmailActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
             finish();
@@ -279,5 +284,13 @@ public class UpdateEmailActivity extends AppCompatActivity {
         imageView_show_hide_pwd = findViewById(R.id.imageView_show_hide_pwd);
         profile = findViewById(R.id.profile);
     }
+    // Back to home
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(UpdateEmailActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
 
+    }
 }

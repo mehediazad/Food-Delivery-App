@@ -43,54 +43,11 @@ public class PasswordChangeActivity extends AppCompatActivity {
     private FirebaseAuth authProfile;
     private LinearLayout profile;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_change);
-
-/*
-        imageView_show_hide_curr_pwd.setImageResource(R.drawable.hide_pwd);
-        imageView_show_hide_curr_pwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editText_change_pwd_current.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
-                    editText_change_pwd_current.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    imageView_show_hide_curr_pwd.setImageResource(R.drawable.hide_pwd);
-                }else {
-                    editText_change_pwd_current.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    imageView_show_hide_curr_pwd.setImageResource(R.drawable.eye_24);
-                }
-
-            }
-        });
-        imageView_show_hide_new_pwd.setImageResource(R.drawable.hide_pwd);
-        imageView_show_hide_new_pwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editText_change_pwd_new.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
-                    editText_change_pwd_new.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    imageView_show_hide_new_pwd.setImageResource(R.drawable.hide_pwd);
-                }else {
-                    editText_change_pwd_new.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    imageView_show_hide_new_pwd.setImageResource(R.drawable.eye_24);
-                }
-            }
-        });
-
-        imageView_show_hide_new_conform_pwd.setImageResource(R.drawable.hide_pwd);
-        imageView_show_hide_new_conform_pwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editText_conform_change_pwd_new.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
-                    editText_conform_change_pwd_new.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    imageView_show_hide_new_pwd.setImageResource(R.drawable.hide_pwd);
-                }else {
-                    editText_conform_change_pwd_new.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    imageView_show_hide_new_conform_pwd.setImageResource(R.drawable.eye_24);
-                }
-            }
-        });
-        */
 
         // Toolbar
         Toolbar toolbar = findViewById(R.id.toolbarAction_bar);
@@ -98,6 +55,7 @@ public class PasswordChangeActivity extends AppCompatActivity {
 
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         //
+
         initView();
         bottomNavigation();
         editText_change_pwd_new.setEnabled(false);
@@ -290,7 +248,11 @@ public class PasswordChangeActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
-        } else if (id == R.id.menu_update_profile) {
+        }else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(PasswordChangeActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();}
+        else if (id == R.id.menu_update_profile) {
             Intent intent = new Intent(PasswordChangeActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
             finish();
@@ -336,5 +298,15 @@ public class PasswordChangeActivity extends AppCompatActivity {
         textView_change_pwd_authenticated = findViewById(R.id.textView_change_pwd_authenticated);
         progressBar = findViewById(R.id.progressBar);
         profile = findViewById(R.id.profile);
+    }
+
+    // Back to home
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(PasswordChangeActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
+
     }
 }

@@ -123,8 +123,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
-
     private void showAlertdialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         builder.setTitle("Email Not Verified");
@@ -147,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         if (authProfile.getCurrentUser() != null) {
             Toast.makeText(LoginActivity.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         } else {

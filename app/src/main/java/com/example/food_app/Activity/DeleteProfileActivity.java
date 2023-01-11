@@ -50,6 +50,7 @@ public class DeleteProfileActivity extends AppCompatActivity {
     private static final String TAG = "DeleteProfileActivity";
     private LinearLayout profile;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,7 @@ public class DeleteProfileActivity extends AppCompatActivity {
 
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         //
+
 
         initView();
         authProfile = FirebaseAuth.getInstance();
@@ -234,7 +236,11 @@ public class DeleteProfileActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
-        } else if (id == R.id.menu_update_profile) {
+        } else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(DeleteProfileActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();
+        }else if (id == R.id.menu_update_profile) {
             Intent intent = new Intent(DeleteProfileActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
             finish();
@@ -290,5 +296,15 @@ public class DeleteProfileActivity extends AppCompatActivity {
             }
         }
         progressBar.setVisibility(View.GONE);
+    }
+
+    // Back to home
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(DeleteProfileActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
+
     }
 }

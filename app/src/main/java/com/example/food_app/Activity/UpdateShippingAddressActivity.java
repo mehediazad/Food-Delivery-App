@@ -56,6 +56,7 @@ public class UpdateShippingAddressActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         //
 
+
         // get data Payment and set
         Intent intent = getIntent();
         String fullName = intent.getStringExtra("Name").toString().trim();
@@ -118,7 +119,11 @@ public class UpdateShippingAddressActivity extends AppCompatActivity {
             startActivity(getIntent());
             finish();
             overridePendingTransition(0, 0);
-        } else if (id == R.id.menu_update_profile) {
+        } else if (id == R.id.menu_favorite) {
+            Intent intent = new Intent(UpdateShippingAddressActivity.this, FavoriteActivity.class);
+            startActivity(intent);
+            finish();
+        }else if (id == R.id.menu_update_profile) {
             Intent intent = new Intent(UpdateShippingAddressActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
             finish();
@@ -165,5 +170,14 @@ public class UpdateShippingAddressActivity extends AppCompatActivity {
                 startActivity(new Intent(UpdateShippingAddressActivity.this, MainActivity.class));
             }
         });
+    }
+    // Back to home
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(UpdateShippingAddressActivity.this, MainActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+        finish();
+
     }
 }
