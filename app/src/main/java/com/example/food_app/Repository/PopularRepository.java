@@ -20,6 +20,8 @@ public class PopularRepository {
         getAllPopular = popularDao.getAllPopular();
     }
 
+
+
     public  void insertPopular(Popular popular){
         popularDao.insertPopular(popular);
     }
