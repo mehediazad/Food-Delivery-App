@@ -142,7 +142,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
                     // set user display pic(After user has uploaded)
                     Uri uri = firebaseUser.getPhotoUrl();
-                    Picasso.with(UserProfileActivity.this).load(uri).into(imageView_profile_dp);
+                    Picasso.with(UserProfileActivity.this).load(uri).into( imageView_profile_dp);
 
                 } else {
                     Toast.makeText(UserProfileActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();

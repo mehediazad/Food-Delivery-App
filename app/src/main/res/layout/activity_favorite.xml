@@ -16,7 +16,7 @@
             android:id="@+id/toolbarAction_bar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="#F61A0A"
+            android:background="#ff5e00"
             app:navigationIcon="@drawable/arrow_back_24"
             app:title="Favorite List"
             app:titleTextColor="#FFFFFF" />

@@ -103,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                     editText_register_dob.setError("Date of Birth is required");
                     editText_register_dob.requestFocus();
                 }
+
                 else if ((TextUtils.isEmpty(textMobile))) {
                     Toast.makeText(RegisterActivity.this, "Please Enter Your Phone Number", Toast.LENGTH_SHORT).show();
                     editText_register_mobile.setError("Phone Number is required");
@@ -116,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                     editText_register_mobile.setError("Phone Number is not valid");
                     editText_register_mobile.requestFocus();
                 }
+
                 else if (TextUtils.isEmpty(textPassword)) {
                     Toast.makeText(RegisterActivity.this, "Please Enter Your Password", Toast.LENGTH_SHORT).show();
                     editText_register_password.setError("Password is required");
